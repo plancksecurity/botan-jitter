@@ -88,20 +88,6 @@ Jitter_RNG::Jitter_RNG() : m_jitter{std::make_unique<Rand_Data>()} {}
 
 Jitter_RNG::~Jitter_RNG() = default;
 
-std::string Jitter_RNG::name() const {
-   return "JitterRNG";
-}
-
-bool Jitter_RNG::is_seeded() const {
-   return true;
-}
-
-bool Jitter_RNG::accepts_input() const {
-   return false;
-}
-
-void Jitter_RNG::clear() {}
-
 void Jitter_RNG::fill_bytes_with_input(std::span<uint8_t> out, std::span<const uint8_t> in) {
    m_jitter->collect_into_buffer(out);
 }
