@@ -11,7 +11,7 @@
 
 namespace Botan {
 
-class BOTAN_DLL Jitter_RNG::Rand_Data {
+class Jitter_RNG::Rand_Data {
    public:
       Rand_Data();
       ~Rand_Data();
