@@ -53,7 +53,7 @@ void Jitter_RNG::Rand_Data::collect_into_buffer(std::span<uint8_t> buf) {
       throw Invalid_State("JitterRNG: No jitter entropy collector has been allocated");
    }
 
-   ssize_t num_bytes = jent_read_entropy(m_rand_data, reinterpret_cast<char*>(buf.data()), buf.size());
+   ssize_t num_bytes = jent_read_entropy_safe(&m_rand_data, reinterpret_cast<char*>(buf.data()), buf.size());
    if(num_bytes < 0) {
       const auto error_msg = [&]() -> std::string_view {
          switch(num_bytes) {
