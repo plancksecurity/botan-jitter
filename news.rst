@@ -4,9 +4,6 @@ Release Notes
 Version 3.6.0, Not Yet Released
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Add a CPU jitter RNG/entropy source based on the
-  `jitterentropy library <https://github.com/smuellerDD/jitterentropy-library>`_.
-
 * Fully integrate and further optimize the new ECC library first introduced in
   3.5.0. For common curves, operations are 2 to 3 times faster. This also
   introduces a new API for low level EC operations, such a point multiplication,
