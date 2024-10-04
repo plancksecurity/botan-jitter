@@ -13,7 +13,7 @@
 namespace Botan {
 
 /*
-* RNG using libjitterentropy.
+* RNG using libjitterentropy (https://github.com/smuellerDD/jitterentropy-library).
 */
 class BOTAN_PUBLIC_API(3, 6) Jitter_RNG final : public RandomNumberGenerator {
    public:
