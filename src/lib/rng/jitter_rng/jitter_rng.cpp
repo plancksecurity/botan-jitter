@@ -30,8 +30,8 @@ Jitter_RNG_Internal::Jitter_RNG_Internal() {
       throw Internal_Error("JitterRNG: Can not be used");
    }
 
-   const unsigned int oversampling_rate = 0;  // use default oversampling
-   const unsigned int flags = 0;
+   constexpr unsigned int oversampling_rate = 0;  // use default oversampling
+   constexpr unsigned int flags = 0;
 
    m_rand_data = jent_entropy_collector_alloc(oversampling_rate, flags);
    if(!m_rand_data) {
