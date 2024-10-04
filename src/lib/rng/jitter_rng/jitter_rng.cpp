@@ -55,26 +55,29 @@ void Jitter_RNG::Rand_Data::collect_into_buffer(std::span<uint8_t> buf) {
 
    ssize_t num_bytes = jent_read_entropy(m_rand_data, reinterpret_cast<char*>(buf.data()), buf.size());
    if(num_bytes < 0) {
-      switch(num_bytes) {
-         case -1:  // should never happen because of the check above
-            throw Botan::Internal_Error("JitterRNG: Uninitilialized");
-         case -2:
-            throw Botan::Internal_Error("JitterRNG: SP800-90B repetition count online health test failed");
-         case -3:
-            throw Botan::Internal_Error("JitterRNG: SP800-90B adaptive proportion online health test failed");
-         case -4:
-            throw Botan::Internal_Error("JitterRNG: Internal timer generator could not be initialized");
-         case -5:
-            throw Botan::Internal_Error("JitterRNG: LAG predictor health test failed");
-         case -6:
-            throw Botan::Internal_Error("JitterRNG: Repetitive count test (RCT) failed permanently");
-         case -7:
-            throw Botan::Internal_Error("JitterRNG: Adaptive proportion test (APT) failed permanently");
-         case -8:
-            throw Botan::Internal_Error("JitterRNG: LAG prediction test failed permanently");
-         default:
-            throw Botan::Internal_Error("JitterRNG: Error reading entropy");
-      }
+      const auto error_msg = [&]() -> std::string_view {
+         switch(num_bytes) {
+            case -1:  // should never happen because of the check above
+               return "JitterRNG: Uninitilialized";
+            case -2:
+               return "JitterRNG: SP800-90B repetition count online health test failed";
+            case -3:
+               return "JitterRNG: SP800-90B adaptive proportion online health test failed";
+            case -4:
+               return "JitterRNG: Internal timer generator could not be initialized";
+            case -5:
+               return "JitterRNG: LAG predictor health test failed";
+            case -6:
+               return "JitterRNG: Repetitive count test (RCT) failed permanently";
+            case -7:
+               return "JitterRNG: Adaptive proportion test (APT) failed permanently";
+            case -8:
+               return "JitterRNG: LAG prediction test failed permanently";
+            default:
+               return "JitterRNG: Error reading entropy";
+         }
+      }();
+      throw Internal_Error(error_msg);
    }
    if(num_bytes < buf.size()) {
       throw Botan::Internal_Error("JitterRNG: Not enough bytes have been produced");
