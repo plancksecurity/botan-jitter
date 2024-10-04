@@ -26,7 +26,7 @@ Jitter_RNG::Rand_Data::Rand_Data() {
 
    if(result != 0) {
       // no further details documented regarding the return value
-      throw Botan::Internal_Error("JitterRNG: Can not be used");
+      throw Internal_Error("JitterRNG: Can not be used");
    }
 
    const unsigned int oversampling_rate = 0;  // use default oversampling
@@ -34,7 +34,7 @@ Jitter_RNG::Rand_Data::Rand_Data() {
 
    m_rand_data = jent_entropy_collector_alloc(oversampling_rate, flags);
    if(!m_rand_data) {
-      throw Botan::Internal_Error("JitterRNG: Jitter entropy collector could not be allocated");
+      throw Internal_Error("JitterRNG: Jitter entropy collector could not be allocated");
    }
 }
 
@@ -50,7 +50,7 @@ void Jitter_RNG::Rand_Data::collect_into_buffer(std::span<uint8_t> buf) {
    }
 
    if(!m_rand_data) {
-      throw Botan::Invalid_State("JitterRNG: No jitter entropy collector has been allocated");
+      throw Invalid_State("JitterRNG: No jitter entropy collector has been allocated");
    }
 
    ssize_t num_bytes = jent_read_entropy(m_rand_data, reinterpret_cast<char*>(buf.data()), buf.size());
@@ -80,7 +80,7 @@ void Jitter_RNG::Rand_Data::collect_into_buffer(std::span<uint8_t> buf) {
       throw Internal_Error(error_msg);
    }
    if(num_bytes < buf.size()) {
-      throw Botan::Internal_Error("JitterRNG: Not enough bytes have been produced");
+      throw Internal_Error("JitterRNG: Not enough bytes have been produced");
    }
 }
 
