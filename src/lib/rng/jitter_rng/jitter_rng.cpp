@@ -41,6 +41,7 @@ Jitter_RNG::Rand_Data::Rand_Data() {
 Jitter_RNG::Rand_Data::~Rand_Data() {
    if(m_rand_data) {
       jent_entropy_collector_free(m_rand_data);
+      m_rand_data = nullptr;
    }
 }
 
