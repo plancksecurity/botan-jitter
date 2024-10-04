@@ -45,7 +45,7 @@ Jitter_RNG::Rand_Data::~Rand_Data() {
 }
 
 void Jitter_RNG::Rand_Data::collect_into_buffer(std::span<uint8_t> buf) {
-   if(buf.size() == 0) {
+   if(buf.empty()) {
       return;
    }
 
