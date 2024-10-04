@@ -12,6 +12,12 @@
 
 namespace Botan {
 
+namespace {
+
+struct Jitter_RNG_Internal;
+
+}
+
 /*
 * RNG using libjitterentropy (https://github.com/smuellerDD/jitterentropy-library).
 */
@@ -31,8 +37,7 @@ class BOTAN_PUBLIC_API(3, 6) Jitter_RNG final : public RandomNumberGenerator {
       void fill_bytes_with_input(std::span<uint8_t> out, std::span<const uint8_t> in) override;
 
    private:
-      struct Rand_Data;
-      std::unique_ptr<Rand_Data> m_jitter;
+      std::unique_ptr<Jitter_RNG_Internal> m_jitter;
 };
 }  // namespace Botan
 

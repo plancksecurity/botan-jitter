@@ -11,17 +11,18 @@
 
 namespace Botan {
 
-class Jitter_RNG::Rand_Data {
-   public:
-      Rand_Data();
-      ~Rand_Data();
+namespace {
+
+struct Jitter_RNG_Internal {
+      Jitter_RNG_Internal();
+      ~Jitter_RNG_Internal();
       void collect_into_buffer(std::span<uint8_t> buf);
 
    private:
       rand_data* m_rand_data;
 };
 
-Jitter_RNG::Rand_Data::Rand_Data() {
+Jitter_RNG_Internal::Jitter_RNG_Internal() {
    static int result = jent_entropy_init();
 
    if(result != 0) {
@@ -38,14 +39,14 @@ Jitter_RNG::Rand_Data::Rand_Data() {
    }
 }
 
-Jitter_RNG::Rand_Data::~Rand_Data() {
+Jitter_RNG_Internal::~Jitter_RNG_Internal() {
    if(m_rand_data) {
       jent_entropy_collector_free(m_rand_data);
       m_rand_data = nullptr;
    }
 }
 
-void Jitter_RNG::Rand_Data::collect_into_buffer(std::span<uint8_t> buf) {
+void Jitter_RNG_Internal::collect_into_buffer(std::span<uint8_t> buf) {
    if(buf.empty()) {
       return;
    }
@@ -86,7 +87,9 @@ void Jitter_RNG::Rand_Data::collect_into_buffer(std::span<uint8_t> buf) {
    }
 }
 
-Jitter_RNG::Jitter_RNG() : m_jitter{std::make_unique<Rand_Data>()} {}
+}
+
+Jitter_RNG::Jitter_RNG() : m_jitter{std::make_unique<Jitter_RNG_Internal>()} {}
 
 Jitter_RNG::~Jitter_RNG() = default;
 
