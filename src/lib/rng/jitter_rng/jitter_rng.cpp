@@ -87,7 +87,7 @@ void Jitter_RNG_Internal::collect_into_buffer(std::span<uint8_t> buf) {
    }
 }
 
-}
+}  // namespace
 
 Jitter_RNG::Jitter_RNG() : m_jitter{std::make_unique<Jitter_RNG_Internal>()} {}
 
