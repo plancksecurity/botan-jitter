@@ -19,40 +19,30 @@
 
 namespace Botan_Tests {
 
-class Jitter_RNG_Tests final : public Test {
-      Test::Result test_basic_rng() {
-         const int max_sample_count = 512;
-         Botan::Jitter_RNG rng{};
+std::vector<Test::Result> test_jitter_rng() {
+   return {
+      CHECK("Jitter_RNG basic usage",
+            [](Test::Result& result) {
+               constexpr size_t max_sample_count = 512;
 
-         for(size_t sample_count = 0; sample_count <= max_sample_count; ++sample_count) {
-            [[maybe_unused]] auto buf = rng.random_vec(sample_count);
-         }
+               Botan::Jitter_RNG rng;
+               for(size_t sample_count = 0; sample_count <= max_sample_count; ++sample_count) {
+                  [[maybe_unused]] auto buf = rng.random_vec(sample_count);
+               }
+            }),
 
-         Test::Result result{"JitterRNG basic usage"};
-         result.test_success();
-         return result;
-      }
+      CHECK("JitterRNG as entropy source",
+            [](Test::Result& result) {
+               Botan::Entropy_Sources entropy_sources;
+               entropy_sources.add_source(Botan::Entropy_Source::create("jitter_rng"));
+               Botan::AutoSeeded_RNG rng{entropy_sources};
 
-      Test::Result test_entropy_source() {
-         Botan::Entropy_Sources entropy_sources;
-         entropy_sources.add_source(Botan::Entropy_Source::create("jitter_rng"));
-         Botan::AutoSeeded_RNG rng{entropy_sources};
-         [[maybe_unused]] auto buf = rng.random_vec(512);
+               [[maybe_unused]] auto buf = rng.random_vec(512);
+            }),
+   };
+}
 
-         Test::Result result{"JitterRNG as entropy source"};
-         result.test_success();
-         return result;
-      }
-
-      std::vector<Test::Result> run() override {
-         std::vector<Test::Result> results;
-         results.push_back(test_basic_rng());
-         results.push_back(test_entropy_source());
-         return results;
-      }
-};
-
-BOTAN_REGISTER_TEST("rng", "jitter_rng_unit", Jitter_RNG_Tests);
+BOTAN_REGISTER_TEST_FN("rng", "jitter_rng", test_jitter_rng);
 
 }  // namespace Botan_Tests
 
