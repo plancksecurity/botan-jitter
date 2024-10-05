@@ -36,7 +36,7 @@ class Jitter_RNG_Tests final : public Test {
 
       Test::Result test_entropy_source() {
          Botan::Entropy_Sources entropy_sources;
-         entropy_sources.add_source(Botan::Entropy_Source::create("jitter"));
+         entropy_sources.add_source(Botan::Entropy_Source::create("jitter_rng"));
          Botan::AutoSeeded_RNG rng{entropy_sources};
          std::vector<uint8_t> buf(512);
          rng.randomize(buf.data(), buf.size());
