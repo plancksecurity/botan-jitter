@@ -22,7 +22,7 @@ namespace Botan_Tests {
 std::vector<Test::Result> test_jitter_rng() {
    return {
       CHECK("Jitter_RNG basic usage",
-            [](Test::Result& result) {
+            [](Test::Result&) {
                constexpr size_t max_sample_count = 512;
 
                Botan::Jitter_RNG rng;
@@ -32,7 +32,7 @@ std::vector<Test::Result> test_jitter_rng() {
             }),
 
       CHECK("JitterRNG as entropy source",
-            [](Test::Result& result) {
+            [](Test::Result&) {
                Botan::Entropy_Sources entropy_sources;
                entropy_sources.add_source(Botan::Entropy_Source::create("jitter_rng"));
                Botan::AutoSeeded_RNG rng{entropy_sources};
