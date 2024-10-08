@@ -83,7 +83,7 @@ void Jitter_RNG_Internal::collect_into_buffer(std::span<uint8_t> buf) {
       // According to the docs, `jent_read_entropy` itself runs its logic as often
       // as necessary to gather the requested number of bytes,
       // so this should actually never happen.
-      throw Internal_Error("JitterRNG: Not enough bytes have been produced");
+      BOTAN_ASSERT(num_bytes == buf.size(), "JitterRNG produced the expected number of bytes");
    }
 }
 
