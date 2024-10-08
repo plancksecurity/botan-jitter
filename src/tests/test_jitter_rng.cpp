@@ -23,10 +23,10 @@ std::vector<Test::Result> test_jitter_rng() {
    return {
       CHECK("Jitter_RNG basic usage",
             [](Test::Result&) {
-               constexpr size_t max_sample_count = 512;
+               const std::vector<size_t> sample_counts{0, 1, 2, 4, 64, 128, 512};
 
                Botan::Jitter_RNG rng;
-               for(size_t sample_count = 0; sample_count <= max_sample_count; ++sample_count) {
+               for(auto sample_count : sample_counts) {
                   [[maybe_unused]] auto buf = rng.random_vec(sample_count);
                }
             }),
