@@ -236,7 +236,7 @@ This RNG type allows using the RNG exported from a hardware token accessed via P
 Jitter_RNG
 ^^^^^^^^^^^^^^^^^
 
-This is a hardware RNG based on CPU timing jitter, using the
+This is an RNG based on low-level CPU timing jitter, using the
 `jitterentropy library <https://github.com/smuellerDD/jitterentropy-library>`_.
 
 Can be enabled with ``configure.py`` via ``--enable-module="jitter_rng"``, provided
