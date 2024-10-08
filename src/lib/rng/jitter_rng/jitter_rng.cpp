@@ -84,6 +84,10 @@ Jitter_RNG::Jitter_RNG() : m_jitter{std::make_unique<Jitter_RNG_Internal>()} {}
 
 Jitter_RNG::~Jitter_RNG() = default;
 
+void Jitter_RNG::clear() {
+   m_jitter = std::make_unique<Jitter_RNG_Internal>();
+}
+
 void Jitter_RNG::fill_bytes_with_input(std::span<uint8_t> out, std::span<const uint8_t> in) {
    BOTAN_UNUSED(in);
 

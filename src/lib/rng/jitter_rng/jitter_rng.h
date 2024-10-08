@@ -28,7 +28,7 @@ class BOTAN_PUBLIC_API(3, 6) Jitter_RNG final : public RandomNumberGenerator {
 
       bool accepts_input() const override { return false; }
 
-      void clear() override {}
+      void clear() override;
 
    private:
       void fill_bytes_with_input(std::span<uint8_t> out, std::span<const uint8_t> in) override;
