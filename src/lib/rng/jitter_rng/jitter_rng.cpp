@@ -32,9 +32,7 @@ Jitter_RNG_Internal::Jitter_RNG_Internal() {
    constexpr unsigned int flags = 0;
 
    m_rand_data = jent_entropy_collector_alloc(oversampling_rate, flags);
-   if(!m_rand_data) {
-      throw Internal_Error("JitterRNG: Jitter entropy collector could not be allocated");
-   }
+   BOTAN_ASSERT_NONNULL(m_rand_data);
 }
 
 Jitter_RNG_Internal::~Jitter_RNG_Internal() {
