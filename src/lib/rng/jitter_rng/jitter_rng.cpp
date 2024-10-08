@@ -11,8 +11,6 @@
 
 namespace Botan {
 
-namespace {
-
 struct Jitter_RNG_Internal {
       Jitter_RNG_Internal();
       ~Jitter_RNG_Internal();
@@ -86,8 +84,6 @@ void Jitter_RNG_Internal::collect_into_buffer(std::span<uint8_t> buf) {
       BOTAN_ASSERT(static_cast<size_t>(num_bytes) == buf.size(), "JitterRNG produced the expected number of bytes");
    }
 }
-
-}  // namespace
 
 Jitter_RNG::Jitter_RNG() : m_jitter{std::make_unique<Jitter_RNG_Internal>()} {}
 
