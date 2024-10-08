@@ -23,10 +23,8 @@ struct Jitter_RNG_Internal {
 Jitter_RNG_Internal::Jitter_RNG_Internal() {
    static int result = jent_entropy_init();
 
-   if(result != 0) {
-      // no further details documented regarding the return value
-      throw Internal_Error("JitterRNG: Can not be used");
-   }
+   // no further details documented regarding the return value
+   BOTAN_ASSERT(result == 0, "JitterRNG: initialization successful");
 
    constexpr unsigned int oversampling_rate = 0;  // use default oversampling
    constexpr unsigned int flags = 0;
